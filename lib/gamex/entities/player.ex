@@ -1,5 +1,5 @@
-defmodule Gamex.Entity.Player do
-  alias Gamex.Entity.Card
+defmodule Gamex.Entities.Player do
+  alias Gamex.Entities.Card
   @type t :: %__MODULE__{name: String.t(), hand: [Card.t()], score: integer}
   defstruct name: "", hand: [], score: 0
 

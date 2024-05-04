@@ -1,7 +1,7 @@
-defmodule Gamex.Entity.Deck do
+defmodule Gamex.Entities.Deck do
   require IEx
 
-  @type t :: %__MODULE__{cards: [Gamex.Entity.Card.t()]}
+  @type t :: %__MODULE__{cards: [Gamex.Entities.Card.t()]}
   defstruct cards: []
 
   @spec new() :: t
@@ -10,13 +10,13 @@ defmodule Gamex.Entity.Deck do
     |> Enum.flat_map(fn suit ->
       1..13
       |> Enum.map(fn number ->
-        Gamex.Entity.Card.new(number, suit)
+        Gamex.Entities.Card.new(number, suit)
       end)
     end)
     |> new()
   end
 
-  @spec new([Gamex.Entity.Card.t()]) :: t
+  @spec new([Gamex.Entities.Card.t()]) :: t
   def new(cards) do
     %__MODULE__{cards: cards}
   end
@@ -28,7 +28,7 @@ defmodule Gamex.Entity.Deck do
     |> new()
   end
 
-  @spec draw(t, integer) :: {[Gamex.Entity.Card.t()], t}
+  @spec draw(t, integer) :: {[Gamex.Entities.Card.t()], t}
   def draw(deck, n) do
     {drawn_cards, new_deck} = Enum.split(deck.cards, n)
     {drawn_cards, new(new_deck)}

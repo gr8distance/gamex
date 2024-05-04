@@ -18,8 +18,8 @@ defmodule Gamex do
     :world
   end
 
-  alias Gamex.Entity.Player
-  alias Gamex.Entity.BlackJack, as: BJ
+  alias Gamex.Entities.Player
+  alias Gamex.Entities.BlackJack, as: BJ
 
   def start do
     players = [
@@ -32,6 +32,6 @@ defmodule Gamex do
       |> BJ.start_game()
 
     alice = game.players |> List.first()
-    ug = BJ.play(game, alice, :hit)
+    BJ.play(game, alice, :hit)
   end
 end

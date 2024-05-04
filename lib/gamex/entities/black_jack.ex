@@ -1,7 +1,9 @@
-defmodule Gamex.Entity.BlackJack do
+defmodule Gamex.Entities.BlackJack do
+  use Gamex.Entities.Interfaces.Game
+
   require IEx
 
-  alias Gamex.Entity.{Deck, Player, Card}
+  alias Gamex.Entities.{Deck, Player, Card}
 
   @type t :: %__MODULE__{players: [Player.t()], deck: Deck.t()}
   defstruct players: [], deck: nil
@@ -61,7 +63,7 @@ defmodule Gamex.Entity.BlackJack do
   #   # TODO: ターンの概念をえたら次に順番を回す処理を書く
   # end
 
-  @spec calc_score([Gamex.Entity.Card.t()]) :: integer
+  @spec calc_score([Gamex.Entities.Card.t()]) :: integer
   def calc_score(cards) when is_list(cards) do
     cards
     |> Enum.reduce(0, fn card, acc ->
@@ -69,13 +71,13 @@ defmodule Gamex.Entity.BlackJack do
     end)
   end
 
-  @spec card_score(Gamex.Entity.Card.t()) :: integer
+  @spec card_score(Gamex.Entities.Card.t()) :: integer
   defp card_score(%Card{number: number}) do
     cond do
       number == 1 -> 11
       number in 2..10 -> number
       number in 11..13 -> 10
-      true -> IEx.pry()
+      true -> raise "Invalid card number"
     end
   end
 end

@@ -1,4 +1,4 @@
-defmodule Gamex.Entity.Card do
+defmodule Gamex.Entities.Card do
   @type t :: %__MODULE__{number: integer, suit: String.t()}
   defstruct number: 1, suit: ""
 

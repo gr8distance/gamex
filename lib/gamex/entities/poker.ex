@@ -1,5 +1,7 @@
-defmodule Gamex.Entity.Poker do
-  alias Gamex.Entity.{Deck, Player}
+defmodule Gamex.Entities.Poker do
+  use Gamex.Entities.Interfaces.Game
+
+  alias Gamex.Entities.{Deck, Player}
 
   @type t :: %__MODULE__{players: [Player.t()], deck: Deck.t()}
   defstruct players: [], deck: nil
@@ -20,6 +22,9 @@ defmodule Gamex.Entity.Poker do
     new(players, Deck.new())
   end
 
+  def play(_game, _player, :draw) do
+  end
+
   require IEx
 
   @spec start_game(t) :: t
@@ -34,7 +39,7 @@ defmodule Gamex.Entity.Poker do
     |> new()
   end
 
-  @spec calc_score([Gamex.Entity.Card.t()]) :: integer
+  @spec calc_score([Gamex.Entities.Card.t()]) :: integer
   def calc_score(cards) do
     cond do
       royal_straight_flush?(cards) -> 9
@@ -50,7 +55,7 @@ defmodule Gamex.Entity.Poker do
     end
   end
 
-  @spec royal_straight_flush?([Gamex.Entity.Card.t()]) :: boolean
+  @spec royal_straight_flush?([Gamex.Entities.Card.t()]) :: boolean
   def royal_straight_flush?(cards) do
     straight_flush?(cards) &&
       cards
@@ -61,12 +66,12 @@ defmodule Gamex.Entity.Poker do
       |> length() == 4
   end
 
-  @spec straight_flush?([Gamex.Entity.Card.t()]) :: boolean
+  @spec straight_flush?([Gamex.Entities.Card.t()]) :: boolean
   def straight_flush?(cards) do
     straight?(cards) && flush?(cards)
   end
 
-  @spec four_card?([Gamex.Entity.Card.t()]) :: boolean
+  @spec four_card?([Gamex.Entities.Card.t()]) :: boolean
   def four_card?(cards) do
     cards
     |> Enum.group_by(& &1.number)
@@ -74,7 +79,7 @@ defmodule Gamex.Entity.Poker do
     |> length() == 1
   end
 
-  @spec full_house?([Gamex.Entity.Card.t()]) :: boolean
+  @spec full_house?([Gamex.Entities.Card.t()]) :: boolean
   def full_house?(cards) do
     cards
     |> Enum.group_by(& &1.number)
@@ -82,7 +87,7 @@ defmodule Gamex.Entity.Poker do
     |> length() == 1
   end
 
-  @spec flush?([Gamex.Entity.Card.t()]) :: boolean
+  @spec flush?([Gamex.Entities.Card.t()]) :: boolean
   def flush?(cards) do
     cards
     |> Enum.map(& &1.suit)
@@ -90,7 +95,7 @@ defmodule Gamex.Entity.Poker do
     |> length() == 1
   end
 
-  @spec straight?([Gamex.Entity.Card.t()]) :: boolean
+  @spec straight?([Gamex.Entities.Card.t()]) :: boolean
   def straight?(cards) do
     cards
     |> Enum.map(& &1.number)
@@ -100,7 +105,7 @@ defmodule Gamex.Entity.Poker do
     |> length() == 4
   end
 
-  @spec tree_card?([Gamex.Entity.Card.t()]) :: boolean
+  @spec tree_card?([Gamex.Entities.Card.t()]) :: boolean
   def tree_card?(cards) do
     cards
     |> Enum.group_by(& &1.number)
@@ -108,7 +113,7 @@ defmodule Gamex.Entity.Poker do
     |> length() == 1
   end
 
-  @spec one_pair?([Gamex.Entity.Card.t()]) :: boolean
+  @spec one_pair?([Gamex.Entities.Card.t()]) :: boolean
   def two_pair?(cards) do
     cards
     |> Enum.group_by(& &1.number)
@@ -116,7 +121,7 @@ defmodule Gamex.Entity.Poker do
     |> length() == 2
   end
 
-  @spec one_pair?([Gamex.Entity.Card.t()]) :: boolean
+  @spec one_pair?([Gamex.Entities.Card.t()]) :: boolean
   defp one_pair?(cards) do
     cards
     |> Enum.group_by(& &1.number)
