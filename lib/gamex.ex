@@ -20,6 +20,7 @@ defmodule Gamex do
 
   alias Gamex.Entities.Player
   alias Gamex.Entities.BlackJack, as: BJ
+  alias Gamex.Entities.Chinchiro
 
   def start do
     players = [
@@ -28,10 +29,10 @@ defmodule Gamex do
     ]
 
     game =
-      BJ.new(players)
-      |> BJ.start_game()
+      Chinchiro.new(players)
+      |> Chinchiro.start_game()
 
-    alice = game.players |> List.first()
-    BJ.play(game, alice, :hit)
+    # alice = game.players |> List.first()
+    # BJ.play(game, alice, :hit)
   end
 end
