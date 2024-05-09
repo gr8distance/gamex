@@ -50,7 +50,43 @@ defmodule Gamex.Entities.Chinchiro do
   def play(game, player, :roll) do
     hand_updated = %{player | hand: Dice.roll(3)}
     score_updated = %{hand_updated | score: calc_score(hand_updated.hand |> Enum.sort())}
+
     new(merge_players(game.players, [score_updated]))
+  end
+
+  @spec extract_winners(t) :: [Player.t()]
+  def extract_winners(game) do
+    if draw?(game) do
+      []
+    else
+      game.players
+      |> Enum.group_by(fn player -> player.score end)
+      |> Enum.max_by(fn {score, _} -> score end)
+      |> elem(1)
+    end
+  end
+
+  @spec extract_loosers(t) :: [Player.t()]
+  def extract_loosers(game) do
+    game.players -- extract_winners(game) -- extract_draws(game)
+  end
+
+  @spec extract_draws(t) :: [Player.t()]
+  def extract_draws(game) do
+    if draw?(game) do
+      game.players
+    else
+      []
+    end
+  end
+
+  @spec draw?(t) :: boolean
+  defp draw?(game) do
+    game.players
+    |> Enum.group_by(fn player -> player.score end)
+    |> Map.to_list()
+    |> length
+    |> Kernel.==(1)
   end
 
   @spec calc_score([integer]) :: integer

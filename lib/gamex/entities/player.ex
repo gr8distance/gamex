@@ -1,7 +1,14 @@
 defmodule Gamex.Entities.Player do
   alias Gamex.Entities.Card
-  @type t :: %__MODULE__{name: String.t(), hand: [Card.t()], score: integer, bet: integer}
-  defstruct name: "", hand: [], score: 0, bet: 0
+
+  @type t :: %__MODULE__{
+          name: String.t(),
+          hand: [Card.t()],
+          score: integer,
+          bet: integer,
+          cache: integer
+        }
+  defstruct name: "", hand: [], score: 0, bet: 0, cache: 0
 
   @spec new(String.t()) :: t()
   def new(name) do
@@ -19,7 +26,8 @@ defmodule Gamex.Entities.Player do
       name: name,
       hand: hand,
       score: score,
-      bet: bet
+      bet: bet,
+      cache: 0
     }
   end
 end

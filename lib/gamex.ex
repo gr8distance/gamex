@@ -19,20 +19,21 @@ defmodule Gamex do
   end
 
   alias Gamex.Entities.Player
-  alias Gamex.Entities.BlackJack, as: BJ
+  # alias Gamex.Entities.BlackJack, as: BJ
   alias Gamex.Entities.Chinchiro
 
   def start do
     players = [
-      Player.new("alice"),
-      Player.new("bob")
+      Player.new("alice", 5000),
+      Player.new("bob", 5000)
     ]
 
-    game =
-      Chinchiro.new(players)
-      |> Chinchiro.start_game()
+    a =
+      players
+      |> Gamex.UseCases.Chinchiro.GameStarter.execute()
+      |> Gamex.UseCases.Chinchiro.Judger.execute()
+      |> Gamex.UseCases.Chinchiro.RewardDistributor.execute()
 
-    # alice = game.players |> List.first()
-    # BJ.play(game, alice, :hit)
+    IEx.pry()
   end
 end
