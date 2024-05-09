@@ -8,6 +8,11 @@ defmodule Gamex.Entities.Player do
     new(name, [], 0, 0)
   end
 
+  @spec new(String.t(), integer) :: t()
+  def new(name, bet) do
+    new(name, [], 0, bet)
+  end
+
   @spec new(String.t(), [Card.t()], integer, integer) :: t()
   def new(name, hand, score, bet) do
     %__MODULE__{
